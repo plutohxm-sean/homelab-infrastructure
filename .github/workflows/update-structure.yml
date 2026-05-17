@@ -1,0 +1,43 @@
+name: Update Repository Structure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-structure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install tree
+        run: sudo apt-get install tree -y
+
+      - name: Generate Structure
+        run: |
+          echo "# Homelab Infrastructure" > README.md
+          echo "" >> README.md
+          echo "## Repository Structure" >> README.md
+          echo '```text' >> README.md
+          tree -L 2 \
+            -I '.git|node_modules|__pycache__|data|backup' \
+            >> README.md
+          echo '```' >> README.md
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git add README.md
+
+          git diff --cached --quiet || git commit -m "Auto update repository structure"
+
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
