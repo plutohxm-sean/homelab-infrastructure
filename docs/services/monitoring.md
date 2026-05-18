@@ -1,9 +1,5 @@
 # Monitoring Stack
 
-> **Stack:** Prometheus + Grafana + Node Exporter + cAdvisor  
-> **Status:** ✅ Production  
-> **Last Updated:** 2025-05-18
-
 ---
 
 ## Overview
