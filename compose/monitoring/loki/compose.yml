@@ -1,0 +1,21 @@
+services:
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    restart: unless-stopped
+
+    ports:
+      - "3200:3100"
+
+    command: -config.file=/etc/loki/local-config.yaml
+
+    volumes:
+      - /opt/homelab/compose/monitoring/loki/loki-config.yml:/etc/loki/local-config.yaml
+      - /opt/homelab/data/loki:/loki
+
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    external: true

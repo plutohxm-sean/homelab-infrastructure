@@ -9,7 +9,8 @@ alerting:
     - static_configs:
         - targets: []
 
-rule_files: []
+rule_files:
+  - "/etc/prometheus/alerts.yml"
 
 scrape_configs:
   - job_name: "prometheus"
@@ -28,7 +29,6 @@ scrape_configs:
     static_configs:
       - targets: ["cadvisor:8080"]
 
-  # Uncomment kalau mau scrape container lain via docker network
-  # - job_name: "nginx-proxy-manager"
-  #   static_configs:
-  #     - targets: ["nginx-proxy-manager:81"]
+  - job_name: "loki"
+    static_configs:
+      - targets: ["loki:3100"]
